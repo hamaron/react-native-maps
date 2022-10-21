@@ -350,12 +350,13 @@ RCT_EXPORT_METHOD(fitToCoordinates:(nonnull NSNumber *)reactTag
             AIRMap *mapView = (AIRMap *)view;
 
             // Create Polyline with coordinates
-            CLLocationCoordinate2D coords[coordinates.count];
+            CLLocationCoordinate2D *coords = calloc(coordinates.count, sizeof(CLLocationCoordinate2D));
             for(int i = 0; i < coordinates.count; i++)
             {
                 coords[i] = coordinates[i].coordinate;
             }
             MKPolyline *polyline = [MKPolyline polylineWithCoordinates:coords count:coordinates.count];
+            free(coords);
 
             // Set Map viewport
             CGFloat top = [RCTConvert CGFloat:edgePadding[@"top"]];
